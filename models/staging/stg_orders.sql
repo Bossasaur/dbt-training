@@ -18,9 +18,13 @@ p.productid,
 p.category,
 p.productname,
 p.subcategory,
-{{ markup('o.ordersellingprice','o.ordercostprice') }} as markup
+{{ markup('o.ordersellingprice','o.ordercostprice') }} as markup,
+-- from delivery team
+d.delivery_team
 from {{ ref('raw_orders') }} as o
 left join {{ ref('raw_customer') }} as c
 on o.customerid = c.customerid
 left join {{ ref('raw_product') }} as p
 on o.productid = p.productid
+left join {{ ref('delivery_team') }} as d
+on o.shipmode = d.shipmode
